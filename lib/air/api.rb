@@ -8,5 +8,9 @@ module Air
     def self.list
       self.get '/topics'
     end
+
+    def self.fetch id
+      self.get "/topics/#{id}"
+    end
   end
 end
