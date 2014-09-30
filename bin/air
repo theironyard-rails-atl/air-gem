@@ -2,16 +2,30 @@
 # vi: set ft=ruby
 
 require 'thor'
+require 'csv'
 
 require_relative '../lib/air'
 # require File.expand_path('../lib/air', __FILE__)
 
 class AirCommands < Thor
   desc 'list', 'print a list of topics'
-  def list
-    Air::Topic.all.each do |t|
-      puts "#{t.id}) #{t.title}"
+  def list path=nil
+
+    write_dest = if path.nil?
+      $stdout
+    else
+      puts "Writing topic data to '#{path}'"
+      File.open(path, 'w')
     end
+
+    CSV(write_dest) do |out|
+      out << [ :id, :title, :description, :score ]
+
+      Air::Topic.all.each do |t|
+        out << [t.id, t.title, t.description, t.score]
+      end
+    end
+
   end
 
   desc 'jordan', "he's on fire"
