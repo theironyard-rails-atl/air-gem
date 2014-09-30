@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+# vi: set ft=ruby
+
+puts "This should do stuff"
